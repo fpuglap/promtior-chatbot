@@ -25,24 +25,31 @@ The chatbot successfully answers the required questions:
 ### 1. Clone the repository
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/fpuglap/promtior-chatbot.git
 cd promtior-chatbot
 ```
 
-### 2. Install dependencies
+### 2. Set up virtual environment
+
+```bash
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+```
+
+### 3. Install dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 3. Ensure Ollama is running with required model
+### 4. Ensure Ollama is running with required model
 
 ```bash
 ollama pull llama3.2:3b
 ollama serve
 ```
 
-### 4. Run the chatbot
+### 5. Run the chatbot
 
 ```bash
 python main.py
@@ -83,12 +90,30 @@ Choose an option:
 
 ---
 
+## 📁 Project Structure
+
+```
+promtior-chatbot/
+├── main.py              # Main application entry point
+├── chatbot.py           # RAG chatbot implementation
+├── scraper.py           # Web scraping utilities
+├── requirements.txt     # Python dependencies
+├── .gitignore          # Git ignore rules
+├── README.md           # This file
+├── doc/                # Documentation
+│   ├── project-overview.md
+│   └── component-diagram.md
+└── AI Engineer.pdf     # Project specification
+```
+
+---
+
 ## 📚 Documentation
 
 Detailed technical documentation is available in the `/doc` folder as required:
 
-- **Project Overview**: Implementation approach and challenges
-- **Component Diagram**: System architecture and interactions
+- **[Project Overview](doc/project-overview.md)**: Implementation approach and challenges
+- **[Component Diagram](doc/component-diagram.md)**: System architecture and interactions
 
 ---
 
@@ -97,6 +122,40 @@ Detailed technical documentation is available in the `/doc` folder as required:
 - Python 3.9+
 - Ollama installed with `llama3.2:3b` model
 - Internet connection for web scraping
+
+---
+
+## 🔧 Troubleshooting
+
+### Common Issues
+
+1. **Ollama not found**: Make sure Ollama is installed and running
+
+   ```bash
+   ollama serve
+   ```
+
+2. **Model not available**: Pull the required model
+
+   ```bash
+   ollama pull llama3.2:3b
+   ```
+
+3. **Virtual environment issues**: Recreate the virtual environment
+   ```bash
+   rm -rf venv
+   python -m venv venv
+   source venv/bin/activate
+   pip install -r requirements.txt
+   ```
+
+---
+
+## 🚀 Deployment Notes
+
+- The `venv/` and `chroma_db/` directories are excluded from version control
+- Vector database will be recreated automatically on first run
+- All dependencies are listed in `requirements.txt`
 
 ---
 

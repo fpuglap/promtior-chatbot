@@ -1,14 +1,16 @@
-# main.py - Production-ready RAG system (clean version)
+# main.py - Production-ready RAG system with OpenAI
 import warnings
 warnings.filterwarnings('ignore')
 
+import os
+from dotenv import load_dotenv
+load_dotenv()  # Load environment variables
+
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain_ollama import OllamaEmbeddings, ChatOllama
+from langchain_openai import ChatOpenAI, OpenAIEmbeddings  # OpenAI integration
 from langchain_chroma import Chroma
 from langchain.chains import RetrievalQA
 from langchain.prompts import PromptTemplate
-from langchain.schema import Document
-import os
 import hashlib
 import json
 
@@ -79,8 +81,11 @@ def main():
         print(f"❌ ERROR: Failed to load content: {e}")
         return
     
-    # 2. CREATE EMBEDDINGS  
-    embeddings = OllamaEmbeddings(model="llama3.2:3b")
+    # 2. CREATE EMBEDDINGS - OpenAI
+    embeddings = OpenAIEmbeddings(
+        model="text-embedding-3-small",
+        api_key=os.getenv("OPENAI_API_KEY")
+    )
     
     # 3. SMART VECTORSTORE LOADING
     vectorstore = load_or_create_vectorstore(
@@ -89,8 +94,12 @@ def main():
         force_recreate=False
     )
     
-    # 4. CONFIGURE CHAT MODEL
-    chat_model = ChatOllama(model="llama3.2:3b", temperature=0)
+    # 4. CONFIGURE CHAT MODEL - OpenAI
+    chat_model = ChatOpenAI(
+        model="gpt-4o-mini",
+        temperature=0,
+        api_key=os.getenv("OPENAI_API_KEY")
+    )
     
     # 5. CREATE RAG CHAIN
     custom_prompt = PromptTemplate(

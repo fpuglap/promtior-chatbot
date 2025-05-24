@@ -235,6 +235,7 @@ HOME_TEMPLATE = """
             color: #333;
             font-size: 16px;
             margin-bottom: 15px;
+            box-sizing: border-box;
         }
         .ask-btn {
             background: #4CAF50;

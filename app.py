@@ -183,11 +183,19 @@ HOME_TEMPLATE = """
             margin-bottom: 30px;
             font-size: 2.5em;
         }
+        .question-buttons, .additional-questions {
+            margin-bottom: 30px;
+        }
         .question-buttons {
             display: grid;
             grid-template-columns: 1fr;
             gap: 15px;
-            margin-bottom: 30px;
+        }
+        .question-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
         }
         .question-btn {
             background: rgba(255,255,255,0.2);
@@ -199,9 +207,18 @@ HOME_TEMPLATE = """
             transition: all 0.3s ease;
             font-size: 16px;
         }
+        .question-btn.small {
+            padding: 12px 15px;
+            font-size: 14px;
+        }
         .question-btn:hover {
             background: rgba(255,255,255,0.3);
             transform: translateY(-2px);
+        }
+        h3 {
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 15px;
+            font-size: 1.2em;
         }
         .custom-question {
             margin-top: 20px;
@@ -250,6 +267,7 @@ HOME_TEMPLATE = """
         <h1>🤖 Promtior AI Assistant</h1>
         
         <div class="question-buttons">
+            <h3>🎯 Main Questions (Technical Test)</h3>
             <button class="question-btn" onclick="askPredefined('When was Promtior founded?')">
                 📅 When was Promtior founded?
             </button>
@@ -259,6 +277,36 @@ HOME_TEMPLATE = """
             <button class="question-btn" onclick="askPredefined('What results have Promtior clients achieved?')">
                 📊 What results have Promtior clients achieved?
             </button>
+        </div>
+        
+        <div class="additional-questions">
+            <h3>💡 Additional Questions</h3>
+            <div class="question-grid">
+                <button class="question-btn small" onclick="askPredefined('What does Promtior do?')">
+                    🚀 What does Promtior do?
+                </button>
+                <button class="question-btn small" onclick="askPredefined('What is GenAI Product Delivery?')">
+                    📦 What is GenAI Product Delivery?
+                </button>
+                <button class="question-btn small" onclick="askPredefined('What is RAG architecture?')">
+                    🏗️ What is RAG architecture?
+                </button>
+                <button class="question-btn small" onclick="askPredefined('How does Promtior help with automation?')">
+                    ⚙️ How does Promtior help with automation?
+                </button>
+                <button class="question-btn small" onclick="askPredefined('What technologies does Promtior use?')">
+                    💻 What technologies does Promtior use?
+                </button>
+                <button class="question-btn small" onclick="askPredefined('What processes can Promtior automate?')">
+                    🔄 What processes can Promtior automate?
+                </button>
+                <button class="question-btn small" onclick="askPredefined('What is GenAI Department as a service?')">
+                    🏢 What is GenAI Department as a service?
+                </button>
+                <button class="question-btn small" onclick="askPredefined('How can I contact Promtior?')">
+                    📧 How can I contact Promtior?
+                </button>
+            </div>
         </div>
         
         <div class="custom-question">

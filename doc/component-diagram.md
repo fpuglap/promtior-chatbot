@@ -5,87 +5,48 @@
 This diagram shows the components involved in the RAG chatbot solution and their interactions from the time a question is received until a response is generated.
 
 ```mermaid
-graph TD
-    %% User Interface Layer
-    A[👤 User Input] --> B[🎯 Main Interface]
-    B --> C{Menu Selection}
-
-    %% Query Processing
-    C -->|1,2,3| D[📋 Predefined Questions]
-    C -->|4| E[❓ Additional Questions Menu]
-    C -->|5| F[✍️ Custom Question Input]
-    C -->|6| G[👋 Exit Application]
-
-    D --> H[🔍 Query Processing]
-    E --> H
-    F --> H
-
+graph TB
+    %% User Interface
+    UI[👤 User Input] --> MS{Menu Selection}
+    
     %% Data Sources
-    I[🌐 promtior.ai] --> J[🕷️ Web Scraper]
-    K[📄 AI Engineer.pdf] --> L[📑 PDF Processor]
-
-    %% Content Processing Pipeline
-    J --> M[🧹 Content Cleaning]
-    L --> M
-    M --> N[📚 Document Creation]
-    N --> O[✂️ Text Splitter]
-    O --> P[🧠 Embedding Model]
-    P --> Q[💾 Vector Store - Chroma]
-
-    %% RAG Pipeline
-    H --> R[🔎 Vector Similarity Search]
-    R --> Q
-    Q --> S[📋 Context Retrieval]
-    S --> T[🤖 LLM Processing]
-    T --> U[💬 Response Generation]
-    U --> V[📱 User Interface Display]
-
-    %% Caching System
-    Q --> W[⚡ Cache Manager]
-    W --> X{Cache Valid?}
-    X -->|Yes| Y[📊 Load Cached Store]
-    X -->|No| Z[🔄 Rebuild Vector Store]
-    Y --> Q
-    Z --> Q
-
+    WEB[🌐 promtior.ai]
+    PDF[📄 AI Engineer.pdf]
+    
+    %% Core Pipeline
+    MS --> QP[🔍 Query Processing]
+    WEB --> WS[Web Scraper]
+    PDF --> PP[PDF Processor] 
+    WS --> TS[Text Splitter]
+    PP --> TS
+    TS --> EM[🔢 Embeddings]
+    EM --> VS[(🗄️ Vector Store)]
+    
+    %% RAG Process
+    QP --> VSS[🎯 Vector Search]
+    VSS --> VS
+    VS --> CR[📚 Context Retrieval]
+    CR --> LLM[🧠 LLM Processing]
+    LLM --> RG[✨ Response]
+    RG --> UD[📱 Display]
+    
+    %% Cache Logic
+    VS --> CM{Cache Valid?}
+    CM -->|Yes| LC[💾 Load Cache]
+    CM -->|No| RB[🔄 Rebuild]
+    LC --> VSS
+    RB --> VSS
+    
     %% Styling
-    subgraph "Data Ingestion Layer"
-        I
-        K
-        J
-        L
-    end
-
-    subgraph "Processing Layer"
-        M
-        N
-        O
-        P
-    end
-
-    subgraph "Storage Layer"
-        Q
-        W
-        X
-        Y
-        Z
-    end
-
-    subgraph "RAG Pipeline"
-        R
-        S
-        T
-        U
-    end
-
-    subgraph "User Interface Layer"
-        A
-        B
-        C
-        D
-        E
-        F
-        G
-        V
-    end
+    classDef ui fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    classDef data fill:#e8f5e8,stroke:#388e3c,stroke-width:2px
+    classDef process fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    classDef storage fill:#fce4ec,stroke:#c2185b,stroke-width:2px
+    classDef decision fill:#ffecb3,stroke:#ffa000,stroke-width:2px
+    
+    class UI,MS,UD ui
+    class WEB,PDF,WS,PP data
+    class QP,TS,EM,VSS,CR,LLM,RG process
+    class VS,LC,RB storage
+    class CM decision
 ```

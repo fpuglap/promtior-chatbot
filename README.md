@@ -1,6 +1,6 @@
 # 🤖 Promtior RAG Chatbot
 
-An intelligent chatbot assistant that uses **Retrieval Augmented Generation (RAG)** to answer questions about Promtior's services, history, and capabilities based on real-time web scraping and document analysis.
+An intelligent **web-based** chatbot assistant that uses **Retrieval Augmented Generation (RAG)** to answer questions about Promtior's services, history, and capabilities based on real-time web scraping and document analysis.
 
 ---
 
@@ -17,6 +17,13 @@ The chatbot successfully answers the required questions:
 - **When was Promtior founded?** → May 2023
 - **What services does Promtior offer?** → GenAI Product Delivery, GenAI Department as a service, GenAI Adoption Consulting
 - **What results have Promtior clients achieved?** → $1.4 million savings, 90% reduction in response times
+
+---
+
+## 🌐 Live Demo
+
+**The application is deployed and accessible at:**
+**[Live Demo on Railway](https://your-deployed-url.railway.app)** _(Check Railway dashboard for exact URL)_
 
 ---
 
@@ -42,51 +49,45 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-### 4. Ensure Ollama is running with required model
+### 4. Set up environment variables
 
 ```bash
-ollama pull llama3.2:3b
-ollama serve
+# Create .env file
+echo "OPENAI_API_KEY=your_openai_api_key_here" > .env
 ```
 
-### 5. Run the chatbot
+### 5. Run the web application
 
 ```bash
-python main.py
+python app.py
 ```
+
+### 6. Open in browser
+
+Navigate to: `http://localhost:8000`
 
 ---
 
 ## 🛠️ Technologies Used
 
 - **LangChain**: RAG pipeline orchestration
-- **Ollama**: Local LLM and embeddings (`llama3.2:3b`)
+- **OpenAI GPT-4o-mini**: Language model for response generation
+- **OpenAI Embeddings**: Text embeddings (`text-embedding-3-small`)
+- **Flask**: Web application framework
 - **Chroma**: Vector database for document storage
 - **BeautifulSoup**: Web scraping and HTML parsing
 - **PyPDF2**: PDF document processing
+- **Railway**: Cloud deployment platform
 
 ---
 
-## 💬 Usage Example
+## 💻 Web Interface Features
 
-```
-🤖 Promtior AI Assistant
-Loading...
-============================================================
-🎯 PROMTIOR AI ASSISTANT READY
-============================================================
-Choose an option:
-1. When was Promtior founded?
-2. What services does Promtior offer?
-3. What results have Promtior clients achieved?
-4. More questions
-5. Ask your own question
-6. Quit
-❓ Your choice (1-6): 1
-🔍 Question: When was Promtior founded?
-🤔 Thinking...
-🤖 Answer: Promtior was founded in May 2023.
-```
+- **🎯 Predefined Questions**: Quick access to main technical test questions
+- **💡 Additional Questions**: Extended question set for comprehensive testing
+- **💬 Custom Input**: Free-form question input with real-time responses
+- **📱 Responsive Design**: Beautiful, modern interface that works on all devices
+- **⚡ Real-time Processing**: AJAX-powered responses without page reloads
 
 ---
 
@@ -94,11 +95,13 @@ Choose an option:
 
 ```
 promtior-chatbot/
-├── main.py              # Main application entry point
-├── chatbot.py           # RAG chatbot implementation
+├── app.py               # Flask web application (main entry point)
+├── main.py              # Legacy CLI version (for reference)
 ├── scraper.py           # Web scraping utilities
 ├── requirements.txt     # Python dependencies
+├── Procfile            # Railway deployment configuration
 ├── .gitignore          # Git ignore rules
+├── .env                # Environment variables (local only)
 ├── README.md           # This file
 ├── doc/                # Documentation
 │   ├── project-overview.md
@@ -120,28 +123,50 @@ Detailed technical documentation is available in the `/doc` folder as required:
 ## 📋 Prerequisites
 
 - Python 3.9+
-- Ollama installed with `llama3.2:3b` model
+- OpenAI API key (get it from [platform.openai.com](https://platform.openai.com/api-keys))
 - Internet connection for web scraping
 
 ---
 
-## 🔧 Troubleshooting
+## 🔧 Local Development
 
-### Common Issues
+### Environment Setup
 
-1. **Ollama not found**: Make sure Ollama is installed and running
+1. **Get OpenAI API Key**:
+
+   - Visit [OpenAI API Keys](https://platform.openai.com/api-keys)
+   - Create new secret key
+   - Add $5+ credits to your account
+
+2. **Configure Environment**:
 
    ```bash
-   ollama serve
+   cp .env.example .env  # If available
+   # Edit .env and add your OPENAI_API_KEY
    ```
 
-2. **Model not available**: Pull the required model
+3. **Install and Run**:
+   ```bash
+   pip install -r requirements.txt
+   python app.py
+   ```
+
+### Troubleshooting
+
+1. **Missing OpenAI API key**:
 
    ```bash
-   ollama pull llama3.2:3b
+   export OPENAI_API_KEY="your_key_here"
    ```
 
-3. **Virtual environment issues**: Recreate the virtual environment
+2. **Port already in use**:
+
+   ```bash
+   # App runs on port 8000 by default
+   lsof -ti:8000 | xargs kill -9  # Kill process using port 8000
+   ```
+
+3. **Virtual environment issues**:
    ```bash
    rm -rf venv
    python -m venv venv
@@ -151,12 +176,47 @@ Detailed technical documentation is available in the `/doc` folder as required:
 
 ---
 
-## 🚀 Deployment Notes
+## ☁️ Cloud Deployment
 
-- The `venv/` and `chroma_db/` directories are excluded from version control
-- Vector database will be recreated automatically on first run
-- All dependencies are listed in `requirements.txt`
+This application is deployed on **Railway** with automatic GitHub integration:
+
+### Deployment Features
+
+- **✅ Automatic deploys** from GitHub pushes
+- **✅ Environment variable management** for API keys
+- **✅ Custom domain support**
+- **✅ HTTPS encryption** by default
+- **✅ Automatic scaling** based on traffic
+
+### Environment Variables (Railway)
+
+```
+OPENAI_API_KEY=your_openai_api_key_here
+```
 
 ---
 
-**Technical Test Submission for Promtior | RAG Implementation | LangChain + Ollama**
+## 🎮 How to Use
+
+1. **Visit the web application** (locally or deployed URL)
+2. **Try predefined questions** by clicking the main buttons:
+   - 📅 When was Promtior founded?
+   - 🔧 What services does Promtior offer?
+   - 📊 What results have Promtior clients achieved?
+3. **Explore additional questions** in the expanded question set
+4. **Ask custom questions** using the text input field
+5. **Get real-time responses** powered by RAG and OpenAI
+
+---
+
+## 🏗️ Architecture Highlights
+
+- **🔍 Real-time Web Scraping**: Extracts fresh content from promtior.ai
+- **📄 Document Processing**: Analyzes provided PDF specifications
+- **🧠 RAG Pipeline**: Combines retrieval and generation for accurate responses
+- **💾 Smart Caching**: Optimizes performance with intelligent cache management
+- **🌐 Production Ready**: Deployed with proper environment management and security
+
+---
+
+**Technical Test Submission for Promtior | RAG Implementation | LangChain + OpenAI + Flask + Railway**

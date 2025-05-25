@@ -23,7 +23,7 @@ The chatbot successfully answers the required questions:
 ## 🌐 Live Demo
 
 **The application is deployed and accessible at:**
-**[Live Demo on Railway](https://your-deployed-url.railway.app)** _(Check Railway dashboard for exact URL)_
+**[Live Demo on Railway](https://promtior-chatbot-production-0b0b.up.railway.app/)** __
 
 ---
 
